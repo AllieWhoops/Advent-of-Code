@@ -21,18 +21,17 @@ public class Day1Part2 {
         Scanner reader;
         try {
             reader = new Scanner(input);
-            while(reader.hasNextLine()){ // Iterates through input file, converting inputs to a char (L or R, representing direction) and an integer representing number of clicks
+            while(reader.hasNextLine()){
+                // Iterates through input file, converting inputs to a char (L or R, representing direction) and an integer representing number of clicks
                 String data = reader.nextLine();
                 char dir = data.charAt(0);
                 int rotateValue = Integer.valueOf(data.substring(1));
-                System.out.println(String.format("%s%s", dir, rotateValue));
                 UpdateDial(rotateValue, dir); // Updates the current dial position based on the instruction
             }
             reader.close();
             return zeroCount;
 
         } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
             return -1;
         }
@@ -42,16 +41,15 @@ public class Day1Part2 {
         while(rotateValue > 99){
             // Essentially this is input sanitation, as any rotation of 100 or greater can be instead represented as a rotation between 0-99.
             // This makes the overflows left and right much easier to deal with.
+            // Increments zero counter once for each reduction as any rotation over 100 clicks will pass zero.
             rotateValue -= 100;
             zeroCount++;
-            System.out.println("Z+");
         }
 
         if(dir == 'L'){
             if(currentDialPosition - rotateValue < 0){ // Handles underflow
                 if(currentDialPosition != 0){
                     zeroCount++;
-                    System.out.println("Z+");
                 }
                 currentDialPosition += 100 - rotateValue;
             }
@@ -59,7 +57,6 @@ public class Day1Part2 {
                 currentDialPosition -= rotateValue;
                 if(currentDialPosition == 0){
                     zeroCount++;
-                    System.out.println("Z+");
                 }
             }
         }
@@ -67,7 +64,6 @@ public class Day1Part2 {
             if(currentDialPosition + rotateValue > 99){ // Handles overflow
                 if(currentDialPosition != 0){
                     zeroCount++;
-                    System.out.println("Z+");
                 }
                 currentDialPosition += rotateValue - 100;
             }
@@ -75,10 +71,8 @@ public class Day1Part2 {
                 currentDialPosition += rotateValue;
                 if(currentDialPosition == 0){
                     zeroCount++;
-                    System.out.println("Z+");
                 }
             }
         }
-        System.out.println(currentDialPosition);
     }
 }

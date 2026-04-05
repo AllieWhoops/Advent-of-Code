@@ -22,18 +22,17 @@ public class Day2Part2 {
         Scanner reader;
         try {
             reader = new Scanner(input);
-            while(reader.hasNextLine()){ // Iterates through input file, converting inputs to a char (L or R, representing direction) and an integer representing number of clicks
+            while(reader.hasNextLine()){ // Iterates through lines of input file
                 String data = reader.nextLine();
                 for(String s : data.split(",")){
+
                     String[] rangeBounds = s.split("-");
-                    long[] idsToCheck = LongStream.rangeClosed(Long.parseLong(rangeBounds[0]), Long.parseLong(rangeBounds[1])).toArray();
-                    //System.out.println(String.format("Range of %s-%s:", rangeBounds[0], rangeBounds[1]));
+
+                    long[] idsToCheck = LongStream.rangeClosed(Long.parseLong(rangeBounds[0]), Long.parseLong(rangeBounds[1])).toArray(); // Generates an array with all values in the range
+                    
                     for (long i : idsToCheck) {
                         CheckID(i);
                     }
-                    /*for(int i : currentRangeInvalidIDs) {
-                        System.out.println(i);
-                    }*/
 
                     invalidIDs.addAll(currentRangeInvalidIDs);
                     currentRangeInvalidIDs.clear();
@@ -41,11 +40,10 @@ public class Day2Part2 {
             }
             reader.close();
         } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
             return;
         }
-        long sum = 0;
+        long sum = 0; // Sum the numerical values of invalid IDs
         for (Long i : invalidIDs){
             sum += i;
         }
@@ -85,7 +83,7 @@ public class Day2Part2 {
     static ArrayList<Integer> GetFactors(int num){
         ArrayList<Integer> list = new ArrayList<Integer>();
         
-        for(int i = (num / 2); i > 0; i--){
+        for(int i = (num / 2); i > 0; i--){ // Checks all integer values up to half of N. If they have no remainder, add to list of factors
             if(num % i == 0){
                 list.add(i);
             }

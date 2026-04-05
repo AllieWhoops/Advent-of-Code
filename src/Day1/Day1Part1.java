@@ -20,17 +20,19 @@ public class Day1Part1 {
         Scanner reader;
         try {
             reader = new Scanner(input);
-            while(reader.hasNextLine()){ // Iterates through input file, converting inputs to a char (L or R, representing direction) and an integer representing number of clicks
+            while(reader.hasNextLine()){
+                // Iterates through input file, converting inputs to a char (L or R, representing direction) and an integer representing number of clicks
+
                 String data = reader.nextLine();
                 char dir = data.charAt(0);
                 int rotateValue = Integer.valueOf(data.substring(1));
+
                 UpdateDial(rotateValue, dir); // Updates the current dial position based on the instruction
             }
             reader.close();
             return zeroCount;
 
         } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
             return -1;
         }
@@ -62,6 +64,5 @@ public class Day1Part1 {
         if(currentDialPosition == 0){
             zeroCount++;
         }
-        //System.out.println(currentDialPosition);
     }
 }
