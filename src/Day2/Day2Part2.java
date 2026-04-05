@@ -54,34 +54,32 @@ public class Day2Part2 {
     }
 
     static void CheckID(long id){
-        int[] idAsArray = Long.toString(id).chars().map(a->a-'0').toArray();
 
-        ArrayList<Integer> factors = GetFactors(idAsArray.length);
+        int[] idAsArray = Long.toString(id).chars().map(a->a-'0').toArray(); // Turns the ID into an array of single digit integers
 
-        for(int factor : factors){
+        ArrayList<Integer> factors = GetFactors(idAsArray.length); // Returns list of factors of the ID's length in descending order (means fewer comparisons needed)
+
+        for(int f : factors){ // Iterates through each of the factors of the length of the ID to check substrings
 
             ArrayList<int[]> subArrays = new ArrayList<int[]>();
             
-            for(int i = 0; i < idAsArray.length; i+=factor){
-                subArrays.add(Arrays.copyOfRange(idAsArray, i, i+factor));
-                //System.out.println(Arrays.stream(subArrays.getLast()).boxed().collect(Collectors.toList()));
+            for(int i = 0; i < idAsArray.length; i+=f){ // Separates the ID into segments of equal length
+                subArrays.add(Arrays.copyOfRange(idAsArray, i, i+f));
             }
 
             boolean isInvalid = true;
 
-            for(int[] subArray : subArrays){
+            for(int[] subArray : subArrays){ // If any of the segments do not match, then ID is not a repeating pattern of length f
                 if(!Arrays.equals(subArray, subArrays.getFirst())){
                     isInvalid = false;
                 }
             }
 
-            if(isInvalid == true){
+            if(isInvalid == true){ // If at least one repeating pattern is found, add to list of invalid IDs and exit
                 currentRangeInvalidIDs.add(id);
-                System.out.println("Is invalid");
                 return;
             }
         }
-        
     }
 
     static ArrayList<Integer> GetFactors(int num){
